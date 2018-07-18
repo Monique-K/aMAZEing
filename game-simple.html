@@ -1,21 +1,20 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
 
     <style>
 
     .wall {
-      /*background-image: url("imgs/wall.png")*/
       background-color: #ae9ddb;
       height: 50px;
       width: 50px;
       display: inline-block;
       margin: 0px;
-
     }
 
     .ground {
-      background-color: white;
+      background-color: black;
       height: 50px;
       width: 50px;
       display: inline-block;
@@ -24,29 +23,32 @@
     }
 
     .player {
-      /*background-image: url("imgs/rabbit.png");*/
-      background-color: #42f4b9;
-      height: 40px;
-      width: 40px;
+      background-color: #fff351;
+      height: 50px;
+      width: 50px;
       display: inline-block;
-      margin: 5px;
       z-index: 1000;
     }
 
     .border-div {
       width: 650px;
       height: 500px;
-      border: 2px dotted teal;
+      border: 5px solid lime;
       line-height: 0px;
     }
 
     #victory-img {
       width: 650px;
-      /*display: inline-block;
-      vertical-align: middle;*/
-      position: relative;
-      top: 50%;
-      transform: translateY(35%);
+      height: 500px;
+      display: inline-block;
+      margin: auto;
+    }
+
+    #play-again {
+      font-family: 'Press Start 2P', cursive;
+      width: 650px;
+      text-align: center;
+      color: yellow;
     }
 
     </style>
@@ -57,9 +59,12 @@
     <div class="border-div">
     <div id="map"></div>
   </div>
+   <div id="play-again"></div>
   </body>
 
 <script>
+
+
     const maze1 = [
       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
       [1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0],
@@ -73,76 +78,80 @@
       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     ]
 
+     const winningPos = {
+      col: 12,
+      row: 1
+    }
+
     const player = {
       col: 0,
       row: 7
     }
 
-    const winningPos = {
-      col: 12,
-      row: 1
-    }
+    let score = 0;
 
-  const createMaze = () => {
-    document.getElementById("map").innerHTML = "";
-    for (let row = 0; row < maze1.length; row ++) {
-      for (let col = 0; col < maze1[row].length; col++) {
-        if (maze1[row][col] === 1) {
-          document.getElementById("map").innerHTML += "<div class='wall'></div>";
-        } else if (maze1[row][col] === 0) {
-          document.getElementById("map").innerHTML += "<div class='ground'></div>";
-        } else if (maze1[row][col] === 9) {
-          document.getElementById("map").innerHTML += "<div class='ground'></div>";
-        } else if (maze1[row][col] === 3) {
-          document.getElementById("map").innerHTML += "<div class='player'></div>";
+
+  const createMaze = (maze) => {
+    var map = document.getElementById("map")
+    map.innerHTML = "";
+    for (let row = 0; row < maze.length; row ++) {
+      for (let col = 0; col < maze[row].length; col++) {
+        if (maze[row][col] === 1) {
+          map.innerHTML += "<img src='imgs/wall.png' class='wall'></div>";
+        } else if (maze[row][col] === 0) {
+          map.innerHTML += "<div class='ground'></div>";
+        } else if (maze[row][col] === 3) {
+          map.innerHTML += "<img src='imgs/t-rex.jpeg' class='player'></div>";
+
         }
       }
     }
   };
-//Create Rules:
-//player can't leave game area
-//victory image on win
-//score number of moves
+
   document.onkeydown = (e) => {
-    console.log(maze1[player.row][player.col])
-    console.log(player, winningPos)
+    console.log(e)
     if (player.col === winningPos.col && player.row === winningPos.row) {
       console.log("you win!")
       document.getElementById("map").innerHTML = "";
-      document.getElementById("map").innerHTML = "<img id='victory-img' src='imgs/victory-.jpg' />"
-  } else if (e.code === "ArrowLeft" ) {
+      document.getElementById("map").innerHTML = "<img id='victory-img' src='imgs/win-taco.gif' />"
+      document.getElementById("play-again").innerHTML += "<h1>Play again<h1>";
+      // document.getElementById("play-again").on("click", createMaze()); --------------------
+    } else if (e.code === "ArrowLeft" ) {
       if (maze1[player.row][player.col-1] !== 1) {
         maze1[player.row][player.col] = 0
         player.col --
         maze1[player.row][player.col] = 3
-        createMaze()
+        score ++;
+        createMaze(maze1)
       }
     } else if (e.code === "ArrowUp") {
       if (maze1[player.row-1][player.col] !== 1) {
         maze1[player.row][player.col] = 0
         player.row --
         maze1[player.row][player.col] = 3
-        createMaze()
+        score ++;
+        createMaze(maze1)
       }
     } else if (e.code === "ArrowRight") {
         if (maze1[player.row][player.col+1] !== 1) {
         maze1[player.row][player.col] = 0
         player.col ++
         maze1[player.row][player.col] = 3
-        createMaze()
+        score ++;
+        createMaze(maze1)
       }
     } else if (e.code === "ArrowDown") {
       if (maze1[player.row+1][player.col] !== 1) {
         maze1[player.row][player.col] = 0
         player.row ++
         maze1[player.row][player.col] = 3
-        createMaze()
+        score ++;
+        createMaze(maze1)
       }
     }
-}
+  }
 
-
-  createMaze();
+ createMaze(maze1)
 
     </script>
 

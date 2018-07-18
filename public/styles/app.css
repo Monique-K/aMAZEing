@@ -1,0 +1,56 @@
+.wall {
+      background-color: #ae9ddb;
+      height: 50px;
+      width: 50px;
+      display: inline-block;
+      margin: 0px;
+    }
+
+    .ground {
+      background-color: black;
+      height: 50px;
+      width: 50px;
+      display: inline-block;
+      margin: 0px;
+
+    }
+
+    .player {
+      background-color: #fff351;
+      height: 50px;
+      width: 50px;
+      display: inline-block;
+      z-index: 1000;
+    }
+
+    .coin {
+      background-color: black;
+      height: 40px;
+      width: 40px;
+      margin: 5px;
+      display: inline-block;
+    }
+
+    .border-div {
+      background-color: black;
+      width: 800px;
+      height: 850px;
+     /* width: 650px;
+      height: 500px;*/
+      border: 5px solid lime;
+      line-height: 0px;
+    }
+
+    #victory-img {
+      width: 650px;
+      height: 500px;
+      display: inline-block;
+      margin: auto;
+    }
+
+    #play-again {
+      font-family: 'Press Start 2P', cursive;
+      width: 650px;
+      text-align: center;
+      color: gold;
+    }
